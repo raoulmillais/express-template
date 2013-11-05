@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "predeploy": "grunt build",
     "start": "node server.js"
   },
   "dependencies": {
@@ -25,5 +26,9 @@
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-cssmin": "~0.7.0",
     "grunt-contrib-copy": "~0.4.1"
+  },
+  "subdomain": "locker-player",
+  "engines": {
+    "node": "0.10.x"
   }
 }

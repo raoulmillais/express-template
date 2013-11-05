@@ -4,6 +4,7 @@
 .monitor
 *.css
 *.gz
+*.tgz
 *.swp
 /build/
 tags
