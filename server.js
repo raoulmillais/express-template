@@ -14,21 +14,39 @@ if(process.env.SUBDOMAIN){
 	url = 'http://' + process.env.SUBDOMAIN + '.jit.su/';
 }
 
+if (process.env.NODE_ENV === 'production' || process.argv[2] === 'production') {
+	console.log('Running in production');
+	app.set('env', 'production');
+} else {
+	app.set('env', 'development');
+}
+
+/*
+* Per-environment config
+*/
+if (app.get('env') === 'development') {
+	app.set('views', __dirname + '/views');
+	app.use(express.static(path.join(__dirname, '.tmp')));
+	app.use(express.static(path.join(__dirname, 'client')));
+	app.use(express.logger('dev'));
+	app.use(express.favicon(__dirname + '/client/images/favicon.ico'));
+	app.use(express.errorHandler());
+} else if (app.get('env') === 'production') {
+	app.set('views', __dirname + '/dist/views');
+	app.use(express.static(path.join(__dirname, 'dist/client')));
+	app.use(express.logger());
+	app.use(express.favicon(__dirname + '/dist/client/images/favicon.ico'));
+}
+
 // configuration
 app.engine('handlebars', hbjs({
 	defaultLayout: 'main'
 }));
 app.set('view engine', 'handlebars');
-app.use(express.logger());
 app.use(express.compress());
-app.use(express.favicon(__dirname + '/client/images/favicon.ico'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'client')));
-if (app.get('env') === 'development') {
-	app.use(express.errorHandler());
-}
 
 // routes
 app.get('/', routes.index);
