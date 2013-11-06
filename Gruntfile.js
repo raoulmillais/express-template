@@ -84,7 +84,7 @@ module.exports = function configureGrunt(grunt) {
 					useStrict: true,
 					wrap: true,
 					mainConfigFile: 'client/scripts/config.js',
-					out: 'app.dist.js'
+					out: 'dist/client/scripts/app.dist.js'
 				}
 			},
 		},
