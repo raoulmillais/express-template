@@ -60,6 +60,34 @@ module.exports = function configureGrunt(grunt) {
 				jshintrc: '.jshintrc'
 			}
 		},
+		requirejs: {
+			app: {
+				options: {
+					name: 'app',
+					baseUrl: 'client/scripts/',
+					shim: {
+						handlebars: {
+							deps: [],
+							exports: 'Handlebars',
+						},
+						lodash: {
+							deps: [],
+							exports: '_',
+							init: function () {
+								return this._.noConflict();
+							},
+						}
+					},
+					optimize: 'uglify2',
+					generateSourceMaps: true,
+					preserveLicenseComments: false,
+					useStrict: true,
+					wrap: true,
+					mainConfigFile: 'client/scripts/config.js',
+					out: 'app.dist.js'
+				}
+			},
+		},
 		nodemon: {
 			dev: {
 				options: {
@@ -175,7 +203,7 @@ module.exports = function configureGrunt(grunt) {
 		'clean:dist',
 		'concurrent:dist',
 
-		//'requirejs:app',
+		'requirejs:app',
 
 		'cssmin',
 		'copy:dist',
