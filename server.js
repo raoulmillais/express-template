@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 var express = require('express'),
+	rollbar = require('rollbar'),
 	path = require('path'),
 	pkg = require('./package'),
 	app = express(),
@@ -47,6 +48,7 @@ app.use(express.compress());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(app.router);
+app.use(rollbar.errorHandler(process.env.ROLLBAR_ACCESS_TOKEN));
 
 // routes
 app.get('/', routes.index);
